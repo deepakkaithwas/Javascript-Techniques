@@ -1,13 +1,16 @@
+/*
+* Create any function as curry function in ES6 way
+*/
+
 function curryFun(fun) {
-    return function curried() {
-        var arr = Array.prototype.slice.call(arguments);
-        if (arr.length === fun.length) {
-            fun.apply(null, arr);
+    return function curried(...args) {
+        // Check if passed args length is great then or equal to the function which is getting curried's arrity length
+        if (args.length >= fun.length) {
+            fun(...args);
         } else {
             return function (a) {
-                var newArgs = [].concat(arr);
-                newArgs.push(a);
-                return curried.apply(null, newArgs);
+                // Concat the args with passed argument from curried function
+                return curried(...[...args,a]);
             }
         }
     }
